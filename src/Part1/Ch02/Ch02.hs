@@ -1,9 +1,9 @@
+-- | 2 First steps
 module Part1.Ch02.Ch02 where
 
 import Part1.Ch01.Ch01
 
--- 2 First steps
--- 2.5 Haskell Scripts
+-- | 2.5 Haskell Scripts
 quadruple :: Num a => a -> a
 quadruple x = double (double x)
 
