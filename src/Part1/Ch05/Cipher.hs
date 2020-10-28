@@ -1,9 +1,9 @@
+-- | 5.5 The Caesar cipher
 module Part1.Ch05.Cipher where
 
 import Data.Char
 import Part1.Ch05.Ch05
 
--- 5.5 The Caesar cipher
 let2int :: Char -> Int
 let2int c = ord c - ord 'a'
 
@@ -18,7 +18,7 @@ shift n c
 encode :: Int -> String -> String
 encode n xs = [shift n x | x <- xs]
 
---- cracking
+--- | cracking
 table :: [Float]
 table = [8.1, 1.5, 2.8, 4.2, 12.7, 2.2, 2.0, 6.1, 7.0,
          0.2, 0.8, 4.0, 2.4, 6.7, 7.5, 1.9, 0.1, 6.0,
