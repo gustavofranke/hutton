@@ -1,20 +1,21 @@
 -- | 1. Introduction
 module Part1.Ch01.Ch01 where
 
+import Prelude hiding (sum)
+
 -- | 1.1 Functions
--- double 3
--- >>> 6
+-- >>> double 3
+-- 6
 double :: Num a => a -> a
 double x = x + x
 
 -- | 1.5
 -- Summing
-sum' :: Num p => [p] -> p
-sum' [] = 0
-sum' (n:ns) = n + sum' ns
-
-b :: Integer
-b = sum' [1,2,3]
+-- >>> sum [1,2,3]
+-- 6
+sum :: Num p => [p] -> p
+sum [] = 0
+sum (n:ns) = n + sum ns
 
 -- | Sorting values
 qsort :: Ord a => [a] -> [a]

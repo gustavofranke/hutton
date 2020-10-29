@@ -1,7 +1,7 @@
 -- | 2 First steps
 module Part1.Ch02.Ch02 where
 
-import Part1.Ch01.Ch01
+import Part1.Ch01.Ch01 (double)
 
 -- | 2.5 Haskell Scripts
 quadruple :: Num a => a -> a
