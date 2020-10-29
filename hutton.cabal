@@ -18,6 +18,16 @@ library
   exposed-modules:     Part1.Ch01.Ch01
                      , Part1.Ch02.Ch02
                      , Part1.Ch05.Ch05
+                     , Part1.Ch05.Cipher
   build-depends:       base >= 4.7 && <5
   hs-source-dirs:      src
+  default-language:    Haskell2010
+
+test-suite test
+  ghc-options:         -Wall
+  type:                exitcode-stdio-1.0
+  main-is:             Tests.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , doctest >= 0.16
   default-language:    Haskell2010
