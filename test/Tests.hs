@@ -9,4 +9,5 @@ main = doctest [
     , "src/Part1/Ch05"
     , "src/Part1/Ch06"
     , "src/Part1/Ch07"
+    , "src/Part1/Ch08"
     ]
