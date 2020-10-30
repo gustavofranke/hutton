@@ -20,6 +20,8 @@ library
                      , Part1.Ch05.Ch05
                      , Part1.Ch05.Cipher
                      , Part1.Ch06.Ch06
+                     , Part1.Ch07.Ch07
+                     , Part1.Ch07.Voting
   build-depends:       base >= 4.7 && <5
   hs-source-dirs:      src
   default-language:    Haskell2010
