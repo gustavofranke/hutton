@@ -23,6 +23,7 @@ library
                      , Part1.Ch07.Ch07
                      , Part1.Ch07.Voting
                      , Part1.Ch08.Ch08
+                     , Part1.Ch08.Machine
   build-depends:       base >= 4.7 && <5
   hs-source-dirs:      src
   default-language:    Haskell2010
