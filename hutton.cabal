@@ -27,6 +27,7 @@ library
                      , Part1.Ch08.Tautology
                      , Part2.Ch10.Hangman
                      , Part2.Ch10.Nim
+                     , Part2.Ch12.Monads
   build-depends:       base >= 4.7 && <5
   hs-source-dirs:      src
   default-language:    Haskell2010
