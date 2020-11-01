@@ -34,7 +34,7 @@ library
 executable countdown
   main-is:             Main.hs
   ghc-options:         -rtsopts -O2
-  build-depends:       base
+  build-depends:       base >= 4.7 && <5
   other-modules:       Countdown
   default-language:    Haskell2010
   hs-source-dirs:      src/Part1/Ch09
@@ -42,16 +42,24 @@ executable countdown
 executable life
   main-is:             Main.hs
   ghc-options:         -rtsopts -O2
-  build-depends:       base
+  build-depends:       base >= 4.7 && <5
   other-modules:       Life
   default-language:    Haskell2010
   hs-source-dirs:      src/Part2/Ch10/Life
+
+executable tictactoe
+  main-is:             Main.hs
+  ghc-options:         -rtsopts -O2
+  build-depends:       base >= 4.7 && <5
+  other-modules:       TicTacToe
+  default-language:    Haskell2010
+  hs-source-dirs:      src/Part2/Ch11
 
 test-suite test
   ghc-options:         -Wall
   type:                exitcode-stdio-1.0
   main-is:             Tests.hs
   hs-source-dirs:      test
-  build-depends:       base
+  build-depends:       base >= 4.7 && <5
                      , doctest >= 0.16
   default-language:    Haskell2010
