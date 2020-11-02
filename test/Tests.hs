@@ -15,4 +15,5 @@ main = doctest [
     , "src/Part2/Ch11/TicTacToe.hs"
     -- , "src/Part2/Ch12"
     , "src/Part2/Ch13"
+    , "src/Part2/Ch14"
     ]
