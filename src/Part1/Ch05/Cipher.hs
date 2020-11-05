@@ -8,7 +8,7 @@ import Data.List (drop, head, minimum, sum, take, zip)
 import GHC.Base (Char, Float, Int, String, ord, otherwise, (++))
 import GHC.Num
 import GHC.Real (fromIntegral, mod, (/), (^))
-import Part1.Ch05.Ch05
+import Part1.Ch05.Ch05 (count, lowers, positions)
 
 -- >>> let2int 'a'
 -- 0
