@@ -1,3 +1,5 @@
+{-# LANGUAGE InstanceSigs #-}
+
 module Part2.Ch13.Parsers where
 
 import Control.Applicative
@@ -27,7 +29,7 @@ test2 = parse item "abc" -- [('a',"bc")]
 
 -- 13.4 Sequencing parsers
 instance Functor Parser where
-    -- fmap :: (a -> b) -> Parser a -> Parser b
+    fmap :: (a -> b) -> Parser a -> Parser b
     fmap g p = P (\inp -> case parse p inp of
             [] -> []
             [(v, out)] -> [(g v,out)])
@@ -36,10 +38,10 @@ test3 = parse (fmap toUpper item) "abc" -- [('A',"bc")]
 test4 = parse (fmap toUpper item) "" -- []
 
 instance Applicative Parser where
-    -- pure :: a -> Parser a
+    pure :: a -> Parser a
     pure v = P (\inp -> [(v,inp)])
     
-    -- (<*>) :: Parser (a -> b) -> Parser a -> Parser b
+    (<*>) :: Parser (a -> b) -> Parser a -> Parser b
     pg <*> px = P (\inp -> case parse pg inp of
         [] -> []
         [(g,out)] -> parse (fmap g px) out)
@@ -58,7 +60,7 @@ test6 = parse three "abcdef" -- [(('a','c'),"def")]
 test7 = parse three "ab" -- []
 
 instance Monad Parser where -- parse :: Parser a -> String -> [(a,String)]
-    -- (>>=) :: Parser a -> (a -> Parser b) -> Parser b
+    (>>=) :: Parser a -> (a -> Parser b) -> Parser b
     p >>= f = P (\inp -> case parse p inp of
         [] -> []
         [(v,out)] -> parse (f v) out)
@@ -77,9 +79,9 @@ test8 = parse threeM "abcdef" -- [(('a','c'),"def")]
 -- and applies the second parser to the same input otherwise”
 
 instance Alternative Parser where
---   empty :: Parser a
+    empty :: Parser a
     empty = P (\inp -> [])
---   (<|>) :: Parser a -> Parser a -> Parser a
+    (<|>) :: Parser a -> Parser a -> Parser a
     p <|> q = P (\inp -> case parse p inp of
               [] -> parse q inp
               [(v,out)] -> [(v,out)])
