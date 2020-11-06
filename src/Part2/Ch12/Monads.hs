@@ -19,10 +19,9 @@ import GHC.Base hiding
     (<*>),
     (>>=),
   )
-import GHC.List (replicate, length)
+import GHC.List (length, replicate)
 import GHC.Num ((*), (+), (-))
-import GHC.Real (even)
-import GHC.Real (div, mod, (^))
+import GHC.Real (div, even, mod, (^))
 import GHC.Show
 import System.IO (getChar)
 
