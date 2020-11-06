@@ -1,7 +1,30 @@
+{-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+
+-- |12 Monads and more
 module Part2.Ch12.Monads where
 
--- 12 Monads and more
----------------------
+import Data.Traversable (sequenceA)
+import Data.Tuple (fst)
+import GHC.Base hiding
+  ( Applicative,
+    Functor,
+    Just,
+    Maybe,
+    Monad,
+    Nothing,
+    fmap,
+    pure,
+    return,
+    (<*>),
+    (>>=),
+  )
+import GHC.List (replicate, length)
+import GHC.Num ((*), (+), (-))
+import GHC.Real (even)
+import GHC.Real (div, mod, (^))
+import GHC.Show
+import System.IO (getChar)
 
 -- 12.1 Functors
 
@@ -20,48 +43,48 @@ map0 f (x:xs) = f x : map0 f xs
 inc' = map0 (+1)
 sqr' = map0 (^2)
 
--- mapping a function over each element of a data structure isn’t specific to the type of lists,
+-- | mapping a function over each element of a data structure isn't specific to the type of lists,
 -- but can be abstracted further to a wide range of parameterised types.
 -- The class of types that support such a mapping function are called functors
-class Functor0 f where
-    fmap0 :: (a -> b) -> f a -> f b
+class Functor f where
+    fmap :: (a -> b) -> f a -> f b
 
-instance Functor0 [] where
-    -- fmap0 :: (a -> b) -> [a] -> [b]
-    fmap0 = map
+instance Functor [] where
+    fmap :: (a -> b) -> [a] -> [b]
+    fmap = map
 
-data Maybe0 a = Nothing0 | Just0 a deriving Show
+data Maybe a = Nothing | Just a deriving Show
 
-instance Functor0 Maybe0 where
-    -- fmap0 :: (a -> b) -> Maybe0 a -> Maybe0 b
-    fmap0 _ Nothing0  = Nothing0
-    fmap0 g (Just0 x) = Just0 (g x)
+instance Functor Maybe where
+    fmap :: (a -> b) -> Maybe a -> Maybe b
+    fmap _ Nothing  = Nothing
+    fmap g (Just x) = Just (g x)
 
-test1 = fmap0 (+1) Nothing0 -- Nothing0
-test2 = fmap0 (*2) (Just0 3) -- Just0 6
-test3 = fmap0 not (Just0 False) -- Just0 True
+test1 = fmap (+1) Nothing -- Nothing
+test2 = fmap (*2) (Just 3) -- Just 6
+test3 = fmap not (Just False) -- Just True
 
 data Tree a = Leaf a | Node (Tree a) (Tree a) deriving Show
 
-instance Functor0 Tree where
-    -- fmap0 :: (a -> b) -> Tree a -> Tree b
-    fmap0 g (Leaf x)   = Leaf (g x)
-    fmap0 g (Node l r) = Node (fmap0 g l) (fmap0 g r)
+instance Functor Tree where
+    fmap :: (a -> b) -> Tree a -> Tree b
+    fmap g (Leaf x)   = Leaf (g x)
+    fmap g (Node l r) = Node (fmap g l) (fmap g r)
 
-test4 = fmap0 length (Leaf "abc") -- Leaf 3
-test5 = fmap0 even (Node (Leaf 1) (Leaf 2)) -- Node (Leaf False) (Leaf True)
+test4 = fmap length (Leaf "abc") -- Leaf 3
+test5 = fmap even (Node (Leaf 1) (Leaf 2)) -- Node (Leaf False) (Leaf True)
 
-instance Functor0 IO where
-    -- fmap0 :: (a -> b) -> IO a -> IO b
-    fmap0 g mx = do x <- mx
-                    return (g x)
+instance Functor IO where
+    fmap :: (a -> b) -> IO a -> IO b
+    fmap g mx = do x <- mx
+                   return (g x)
 
--- test6 = fmap0 show (return True)
+-- test6 = fmap show (return True)
 
-inc'' :: Functor0 f => f Int -> f Int
-inc'' = fmap0 (+1)
+inc'' :: Functor f => f Int -> f Int
+inc'' = fmap (+1)
 
-test7 = inc'' (Just0 1) -- Just0 2
+test7 = inc'' (Just 1) -- Just 2
 test8 = inc'' [1,2,3,4,5] -- [2,3,4,5,6]
 test9 = inc'' (Node (Leaf 1) (Leaf 2)) -- Node (Leaf 2) (Leaf 3)
 
@@ -83,8 +106,8 @@ test9 = inc'' (Node (Leaf 1) (Leaf 2)) -- Node (Leaf 2) (Leaf 3)
 -- A typical use of pure and <*> has the following form:
 -- pure g <*> x1 <*> x2 <*> ... <*> xn
 
--- fmap0' :: a -> f a
--- fmap0' = pure
+-- fmap' :: a -> f a
+-- fmap' = pure
 
 -- fmap1 :: (a -> b) -> f a -> f b
 -- fmap1 g x = pure g <*> x
@@ -95,46 +118,46 @@ test9 = inc'' (Node (Leaf 1) (Leaf 2)) -- Node (Leaf 2) (Leaf 3)
 -- fmap3 :: (a -> b -> c -> d) -> f a -> f b -> f c -> f d
 -- fmap3 g x y z = pure g <*> x <*> y <*> z
 
-class Functor0 f => Applicative0 f where
-    pure0 :: a -> f a
-    (<**>) :: f (a -> b) -> f a -> f b
+class Functor f => Applicative f where
+    pure :: a -> f a
+    (<*>) :: f (a -> b) -> f a -> f b
 
 -- Examples
-instance Applicative0 Maybe0 where
-    -- pure0 :: a -> Maybe0 a
-    pure0 = Just0
-    -- (<**>) :: Maybe0 (a -> b) -> Maybe0 a -> Maybe0 b
-    Nothing0 <**> _ = Nothing0
-    (Just0 g) <**> mx = fmap0 g mx
+instance Applicative Maybe where
+    pure :: a -> Maybe a
+    pure = Just
+    (<*>) :: Maybe (a -> b) -> Maybe a -> Maybe b
+    Nothing <*> _ = Nothing
+    (Just g) <*> mx = fmap g mx
 
-test10 = pure0 (+1) <**> Just0 1 -- Just0 2
-test11 = pure0 (+) <**> Just0 1 <**> Just0 2 -- Just0 3
-test12 = pure0 (+) <**> Nothing0 <**> Just0 2 -- Nothing0
+test10 = pure (+1) <*> Just 1 -- Just 2
+test11 = pure (+) <*> Just 1 <*> Just 2 -- Just 3
+test12 = pure (+) <*> Nothing <*> Just 2 -- Nothing
 
-instance Applicative0 [] where
-    -- pure0 :: a -> [a]
-    pure0 x = [x]
-    -- (<**>) :: [a -> b} -> [a] -> [b]
-    gs <**> xs = [g x | g <- gs, x <- xs]
+instance Applicative [] where
+    pure :: a -> [a]
+    pure x = [x]
+    (<*>) :: [a -> b] -> [a] -> [b]
+    gs <*> xs = [g x | g <- gs, x <- xs]
 
-test13 = pure0 (+1) <**> [1,2,3] -- [2,3,4]
-test14 = pure0 (+) <**> [1] <**> [2] -- [3]
-test15 = pure0 (*) <**> [1,2] <**> [3,4] -- [3,4,6,8]
+test13 = pure (+1) <*> [1,2,3] -- [2,3,4]
+test14 = pure (+) <*> [1] <*> [2] -- [3]
+test15 = pure (*) <*> [1,2] <*> [3,4] -- [3,4,6,8]
 
 prods :: [Int] -> [Int] -> [Int]
-prods xs ys = pure0 (*) <**> xs <**> ys
+prods xs ys = pure (*) <*> xs <*> ys
 
-instance Applicative0 IO where
-    -- pure0 :: a -> IO a
-    pure0 = return
-    -- (<**>) :: IO (a -> b) -> IO a -> IO b
-    mg <**> mx = do g <- mg
-                    x <- mx
-                    return (g x)
+instance Applicative IO where
+    pure :: a -> IO a
+    pure = return
+    (<*>) :: IO (a -> b) -> IO a -> IO b
+    mg <*> mx = do g <- mg
+                   x <- mx
+                   return (g x)
 
 getChars :: Int -> IO String
 getChars 0 = return []
-getChars n = pure0 (:) <**> getChar <**> getChars (n-1)
+getChars n = pure (:) <*> getChar <*> getChars (n-1)
 
 -- Effectful programming
 getChars' :: Int -> IO String
@@ -155,17 +178,17 @@ eval0 (Div x y) = eval0 x `div` eval0 y
 
 test16 = eval0 (Div (Val 1) (Val 0)) -- *** Exception: divide by zero
 
-safediv :: Int -> Int -> Maybe0 Int
-safediv _ 0 = Nothing0
-safediv n m = Just0 (n `div` m)
+safediv :: Int -> Int -> Maybe Int
+safediv _ 0 = Nothing
+safediv n m = Just (n `div` m)
 
-eval1 :: Expr -> Maybe0 Int
-eval1 (Val n)   = Just0 n
+eval1 :: Expr -> Maybe Int
+eval1 (Val n)   = Just n
 eval1 (Div x y) = case eval1 x of
-    Nothing0 -> Nothing0
-    Just0 n  -> case eval1 y of
-        Nothing0 -> Nothing0
-        Just0 m -> safediv n m
+    Nothing -> Nothing
+    Just n  -> case eval1 y of
+        Nothing -> Nothing
+        Just m -> safediv n m
 
 test17 = eval1 (Div (Val 1) (Val 0)) -- Nothing
 
@@ -178,40 +201,45 @@ test17 = eval1 (Div (Val 1) (Val 0)) -- Nothing
 -- namely performing a case analysis on a Maybe value,
 -- mapping Nothing to itself and Just x to some result depending on x.
 -- Abstracting out this pattern gives a new operator >>= that is defined as follows:
-(>>>==) :: Maybe0 a -> (a -> Maybe0 b) -> Maybe0 b
-mx >>>== f = case mx of
-    Nothing0 -> Nothing0
-    Just0 x -> f x
+(>>==) :: Maybe a -> (a -> Maybe b) -> Maybe b
+mx >>== f = case mx of
+    Nothing -> Nothing
+    Just x -> f x
 
-eval2 :: Expr -> Maybe0 Int
-eval2 (Val n) = Just0 n
-eval2 (Div x y) = eval2 x >>>== \n ->
-                    eval2 y >>>== \m ->
+eval2 :: Expr -> Maybe Int
+eval2 (Val n) = Just n
+eval2 (Div x y) = eval2 x >>== \n ->
+                    eval2 y >>== \m ->
                         safediv n m
 
-test18 = eval2 (Div (Val 1) (Val 0)) -- Nothing0
+test18 = eval2 (Div (Val 1) (Val 0)) -- Nothing
 
--- eval :: Expr -> Maybe0 Int
--- eval (Val n) = Just0 n
+-- eval :: Expr -> Maybe Int
+-- eval (Val n) = Just n
 -- eval (Div x y) = do n <- eval x
 --                     m <- eval y
 --                     safediv n m
 
-class Applicative0 m => Monad0 m where
-    return0 :: a -> m a
-    (>>==) :: m a -> (a -> m b) -> m b
-    return0 = pure0
+class Applicative m => Monad m where
+    return :: a -> m a
+    (>>=) :: m a -> (a -> m b) -> m b
+    return = pure
 
 -- Examples
-instance Monad0 Maybe0 where
-    -- (>>==) :: Maybe0 a -> (a -> Maybe0 b) -> Maybe0 b
-    Nothing0 >>== _ = Nothing0
-    (Just0 x) >>== f = f x
+instance Monad Maybe where
+    (>>=) :: Maybe a -> (a -> Maybe b) -> Maybe b
+    Nothing >>= _ = Nothing
+    (Just x) >>= f = f x
 
-instance Monad0 [] where
-    -- (>>==) :: [a] -> (a -> [b]) -> [b]
-    xs >>== f = [ y | x <- xs,
-                      y <- f x]
+instance Monad [] where
+    (>>=) :: [a] -> (a -> [b]) -> [b]
+    xs >>= f = [ y | x <- xs,
+                     y <- f x]
+
+instance Monad IO where
+    (>>=) :: IO a -> (a -> IO b) -> IO b
+    mx >>= f = do x <- mx
+                  f x
 
 -- The state monad
 type State = Int
@@ -222,24 +250,24 @@ newtype ST a = S(State -> (a, State))
 app :: ST a -> State -> (a,State)
 app (S st) x = st x
 
-instance Functor0 ST where
-    -- fmap :: (a -> b) -> ST a -> ST b
-    fmap0 g st = S (\s ->
+instance Functor ST where
+    fmap :: (a -> b) -> ST a -> ST b
+    fmap g st = S (\s ->
          let (x,s') = app st s
          in (g x, s'))
 
-instance Applicative0 ST where
-    -- pure :: a -> ST a
-    pure0 x = S (\s -> (x,s))
-    -- (<*>) :: ST (a -> b) -> ST a -> ST b
-    stf <**> stx = S (\s ->
+instance Applicative ST where
+    pure :: a -> ST a
+    pure x = S (\s -> (x,s))
+    (<*>) :: ST (a -> b) -> ST a -> ST b
+    stf <*> stx = S (\s ->
          let (f,s')   = app stf s
              (x, s'') = app stx s'
          in (f x, s''))
 
-instance Monad0 ST where
-    -- (>>==) :: ST a -> (a -> ST b) -> ST b
-    st >>== f = S (\s ->
+instance Monad ST where
+    (>>=) :: ST a -> (a -> ST b) -> ST b
+    st >>= f = S (\s ->
         let (x,s')   = app st s
         in app (f x) s')
 
@@ -268,7 +296,7 @@ fresh  = S (\n -> (n,n+1))
 -- new version of the relabelling function, written in applicative style
 -- alabel :: Tree a -> ST (Tree Int)
 -- alabel (Leaf _)   = Leaf <$> fresh
--- alabel (Node l r) = Node <$> alabel l <**> alabel r
+-- alabel (Node l r) = Node <$> alabel l <*> alabel r
 
 -- mlabel :: Tree a -> ST (Tree Int)
 -- mlabel (Leaf _) = do n <- fresh
