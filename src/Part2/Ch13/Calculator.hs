@@ -1,7 +1,13 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module Part2.Ch13.Calculator where
 
-import Part2.Ch13.Parsers
-import System.IO
+import Data.Foldable hiding (elem)
+import GHC.Base (Bool (False, True), Char, IO, Int, String, otherwise, return, (++))
+import GHC.List (elem, init, replicate, reverse, take, zip)
+import GHC.Show
+import Part2.Ch13.Parsers (expr, parse)
+import System.IO (getChar, hSetEcho, putStr, stdin)
 
 -- 13.9 Calculator
 box :: [String]
