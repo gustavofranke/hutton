@@ -1,4 +1,10 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module Part2.Ch16.Equational where
+
+import GHC.Base (Int, (++), (==))
+import GHC.Num ((+))
+import GHC.Show
 
 -- 16.7 Compiler correctness (extended example)
 
