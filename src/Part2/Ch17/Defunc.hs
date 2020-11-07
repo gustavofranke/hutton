@@ -1,4 +1,10 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module Part2.Ch17.Defunc where
+
+import GHC.Base
+import GHC.Num
+import GHC.Show
 
 data Expr = Val Int | Add Expr Expr
 type Stack = [Int]

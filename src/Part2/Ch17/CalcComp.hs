@@ -1,4 +1,10 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module Part2.Ch17.CalcComp where
+
+import GHC.Base (Int, id, (.))
+import GHC.List (head)
+import GHC.Num ((+))
 
 data Expr = Val Int | Add Expr Expr
 
