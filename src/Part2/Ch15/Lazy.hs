@@ -1,4 +1,12 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module Part2.Ch15.Lazy where
+
+import Data.Tuple (fst)
+import GHC.Base (Int, ($!), (<), (/=))
+import GHC.List (head, take, takeWhile)
+import GHC.Num ((+), (*))
+import GHC.Real (mod)
  
 inc :: Int -> Int
 inc n = n + 1
