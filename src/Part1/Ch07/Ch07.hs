@@ -16,10 +16,24 @@ add x y = x + y
 add' :: Int -> (Int -> Int)
 add' = \x -> (\y -> x + y)
 
+-- |
+-- >>> twice (*2) 3
+-- 12
+--
+-- >>> twice reverse [1,2,3]
+-- [1,2,3]
 twice :: (a -> a) -> a -> a
 twice f x = f (f x)
 
 -- | 7.2 Processing lists
+-- >>> map (+1) [1,3,5,7]
+-- [2,4,6,8]
+--
+-- >>> map even [1,2,3,4]
+-- [False,True,False,True]
+--
+-- >>> map reverse ["abc","def","ghi"]
+-- ["cba","fed","ihg"]
 map :: (a -> b) -> [a] -> [b]
 map f xs = [f x | x <- xs]
 
@@ -27,6 +41,15 @@ map'' :: (a -> b) -> [a] -> [b]
 map'' f [] = []
 map'' f (x : xs) = f x : map'' f xs
 
+-- |
+-- >>> filter even [1..10]
+-- [2,4,6,8,10]
+--
+-- >>> filter (> 5) [1..10]
+-- [6,7,8,9,10]
+--
+-- >>> filter (/= ' ') "abc def ghi"
+-- "abcdefghi"
 filter :: (a -> Bool) -> [a] -> [a]
 filter p xs = [x | x <- xs, p x]
 
@@ -116,56 +139,3 @@ twice2 f = f . f
 sumsqreven2 ns = sum $ map (^ 2) (filter even ns)
 
 sumsqreven3 = sum . map (^ 2) . filter even
-
--- | 7.6 Binary string transmitter
--- Base conversion
-type Bit = Int
-
--- |
--- >>> bin2int0 [1,0,1,1]
--- 13
-bin2int0 :: [Bit] -> Int
-bin2int0 bits = sum [w * b | (w, b) <- zip weights bits]
-  where
-    weights = iterate (* 2) 1
-
-bin2int :: [Bit] -> Int
-bin2int = foldr (\x y -> x + 2 * y) 0
-
--- |
--- >>> int2bin 13
--- [1,0,1,1]
-int2bin :: Int -> [Bit]
-int2bin 0 = []
-int2bin n = n `mod` 2 : int2bin (n `div` 2)
-
--- |
--- >>> make8 [1,0,1,1]
--- [1,0,1,1,0,0,0,0]
-make8 :: [Bit] -> [Bit]
-make8 bits = take 8 (bits ++ repeat 0)
-
--- | Transmission
--- >>> encode1 "abc"
--- [1,0,0,0,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0]
-encode1 :: String -> [Bit]
-encode1 = concat . map (make8 . int2bin . ord)
-
-chop8 :: [Bit] -> [[Bit]]
-chop8 [] = []
-chop8 bits = take 8 bits : chop8 (drop 8 bits)
-
--- |
--- >>> decode [1,0,0,0,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0]
--- "abc"
-decode :: [Bit] -> String
-decode = map (chr . bin2int) . chop8
-
--- |
--- >>> transmit "higher-order functions are easy"
--- "higher-order functions are easy"
-transmit :: String -> String
-transmit = decode . channel . encode1
-
-channel :: [Bit] -> [Bit]
-channel = id
