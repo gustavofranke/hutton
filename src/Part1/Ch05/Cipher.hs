@@ -10,35 +10,39 @@ import GHC.Num
 import GHC.Real (fromIntegral, mod, (/), (^))
 import Part1.Ch05.Ch05 (count, lowers, positions)
 
+-- |
 -- >>> let2int 'a'
 -- 0
 let2int :: Char -> Int
 let2int c = ord c - ord 'a'
 
+-- |
 -- >>> int2let 0
 -- 'a'
 int2let :: Int -> Char
 int2let n = chr (ord 'a' + n)
 
+-- |
 -- >>> shift 3 'a'
 -- 'd'
-
+--
 -- >>> shift 3 'z'
 -- 'c'
-
+--
 -- >>> shift (-3) 'c'
 -- 'z'
-
+--
 -- >>> shift 3 ' '
--- ''
+-- ' '
 shift :: Int -> Char -> Char
 shift n c
   | isLower c = int2let ((let2int c + n) `mod` 26)
   | otherwise = c
 
+-- |
 -- >>> encode 3 "haskell is fun"
 -- "kdvnhoo lv ixq"
-
+--
 -- >>> encode (-3) "kdvnhoo lv ixq"
 -- "haskell is fun"
 encode :: Int -> String -> String
@@ -50,6 +54,7 @@ table = [8.1, 1.5, 2.8, 4.2, 12.7, 2.2, 2.0, 6.1, 7.0,
          0.2, 0.8, 4.0, 2.4, 6.7, 7.5, 1.9, 0.1, 6.0,
          6.3, 9.0, 2.8, 1.0, 2.4, 0.2, 2.0, 0.1]
 
+-- |
 -- >>> percent 5 15
 -- 33.333336
 percent :: Int -> Int -> Float
@@ -63,14 +68,16 @@ freqs xs = [percent (count x xs) n | x <- ['a' .. 'z']]
 chisqr :: [Float] -> [Float] -> Float
 chisqr os es = sum [((o - e) ^ 2) / e | (o, e) <- zip os es]
 
+-- |
 -- >>> rotate 3 [1,2,3,4,5]
 -- [4,5,1,2,3]
 rotate :: Int -> [a] -> [a]
 rotate n xs = drop n xs ++ take n xs
 
+-- |
 -- >>> crack "kdvnhoo lv ixq"
 -- "haskell is fun"
-
+--
 -- >>> crack "vscd mywzboroxcsyxc kbo ecopev"
 -- "list comprehensions are useful"
 crack :: String -> String
