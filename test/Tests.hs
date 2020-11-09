@@ -6,6 +6,7 @@ main :: IO ()
 main = doctest [
       "src/Part1/Ch01"
     , "src/Part1/Ch02"
+    , "src/Part1/Ch03"
     , "src/Part1/Ch05"
     , "src/Part1/Ch06"
     , "src/Part1/Ch07"
