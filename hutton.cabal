@@ -29,6 +29,7 @@ library
                      , Part1.Ch07.Ch07
                      , Part1.Ch07.Voting
                      , Part1.Ch07.Transmitter
+                     , Part1.Ch07.Exercises
                      , Part1.Ch08.Ch08
                      , Part1.Ch08.Machine
                      , Part1.Ch08.Tautology
