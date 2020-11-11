@@ -33,6 +33,7 @@ library
                      , Part1.Ch08.Ch08
                      , Part1.Ch08.Machine
                      , Part1.Ch08.Tautology
+                     , Part1.Ch08.Exercises
                      , Part2.Ch10.Hangman
                      , Part2.Ch10.Nim
                      , Part2.Ch12.Monads
