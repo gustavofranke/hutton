@@ -1,0 +1,25 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "hutton:lib"
+
+    - path: "./src/Part1/Ch09/Main.hs"
+      component: "hutton:exe:countdown"
+
+    - path: "./src/Part1/Ch09/Countdown.hs"
+      component: "hutton:exe:countdown"
+
+    - path: "./src/Part2/Ch10/Life/Main.hs"
+      component: "hutton:exe:life"
+
+    - path: "./src/Part2/Ch10/Life/Life.hs"
+      component: "hutton:exe:life"
+
+    - path: "./src/Part2/Ch11/Main.hs"
+      component: "hutton:exe:tictactoe"
+
+    - path: "./src/Part2/Ch11/TicTacToe.hs"
+      component: "hutton:exe:tictactoe"
+
+    - path: "./test"
+      component: "hutton:test:test"
