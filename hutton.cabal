@@ -39,6 +39,7 @@ library
                      , Part2.Ch10.Nim
                      , Part2.Ch10.Exercises
                      , Part2.Ch12.Monads
+                     , Part2.Ch12.Exercises
                      , Part2.Ch13.Parsers
                      , Part2.Ch13.Calculator
                      , Part2.Ch14.Foldables
