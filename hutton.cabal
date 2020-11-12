@@ -37,6 +37,7 @@ library
                      , Part1.Ch09.Exercises
                      , Part2.Ch10.Hangman
                      , Part2.Ch10.Nim
+                     , Part2.Ch10.Exercises
                      , Part2.Ch12.Monads
                      , Part2.Ch13.Parsers
                      , Part2.Ch13.Calculator
