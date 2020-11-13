@@ -42,6 +42,7 @@ library
                      , Part2.Ch12.Exercises
                      , Part2.Ch13.Parsers
                      , Part2.Ch13.Calculator
+                     , Part2.Ch14.Exercises
                      , Part2.Ch14.Foldables
                      , Part2.Ch15.Lazy
                      , Part2.Ch16.Equational
