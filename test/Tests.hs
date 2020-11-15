@@ -15,7 +15,8 @@ main = doctest [
     , "src/Part1/Ch09/Countdown.hs"
     , "src/Part2/Ch10/Life/Life.hs"
     , "src/Part2/Ch11/TicTacToe.hs"
-    -- , "src/Part2/Ch12"
+    , "src/Part2/Ch12"
     , "src/Part2/Ch13"
     , "src/Part2/Ch14"
+    , "src/Part2/Ch15"
     ]

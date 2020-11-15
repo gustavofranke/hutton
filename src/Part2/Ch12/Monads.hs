@@ -175,7 +175,7 @@ eval0 :: Expr -> Int
 eval0 (Val n) = n
 eval0 (Div x y) = eval0 x `div` eval0 y
 
-test16 = eval0 (Div (Val 1) (Val 0)) -- *** Exception: divide by zero
+-- test16 = eval0 (Div (Val 1) (Val 0)) -- *** Exception: divide by zero
 
 safediv :: Int -> Int -> Maybe Int
 safediv _ 0 = Nothing
