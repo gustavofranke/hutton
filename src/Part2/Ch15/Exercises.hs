@@ -57,9 +57,23 @@ import Prelude hiding (take, repeat)
 -- Hint: make use of the library functions zip and tail.
 -- Note that numbers in the Fibonacci sequence quickly become large,
 -- hence the use of the type Integer of arbitrary-precision integers above.
-fibs :: [Integer]
-fibs = undefined
 
+-- |
+-- >>> take 10 $ fibs
+-- [0,1,1,2,3,5,8,13,21,34]
+fibs :: [Integer]
+fibs = 0 : 1 : go 0 (1 :: Integer)
+  where
+    go a b = [y | x <- [a + b]
+                , y <- x : go b (a + b)]
+
+-- |
+-- >>> take 10 $ fibs1
+-- [0,1,1,2,3,5,8,13,21,34]
+fibs1 :: [Integer]
+fibs1 = 0 : 1 : go 0 (1 :: Integer)
+  where
+    go a b = (a + b) : go b (a + b)
 
 -- 5. Define appropriate versions of the library functions
 repeat :: a -> [a]
