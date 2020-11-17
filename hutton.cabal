@@ -47,6 +47,7 @@ library
                      , Part2.Ch15.Lazy
                      , Part2.Ch15.Exercises
                      , Part2.Ch16.Equational
+                     , Part2.Ch16.Exercises
                      , Part2.Ch17.CalcComp
                      , Part2.Ch17.Defunc
   build-depends:       base >= 4.7 && <5
