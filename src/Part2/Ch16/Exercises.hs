@@ -43,3 +43,27 @@ inductionOnN' m =
       b = Succ m
    in a == b
 
+-- 2. Using this property, together with add n Zero = n,
+-- show that addition is commutative, add n m = add m n, by induction on n.
+
+-- Hypothesis: add Zero m = add m Zero
+-- Prop: add n (Succ m) = Succ (add n m)
+-- Prop: add Zero (Succ m) = Succ (add Zero m)
+
+-- |
+-- >>> commutativity (Succ Zero)
+-- True
+commutativity :: Nat -> Bool
+commutativity m = 
+    let a = add Zero m
+        b = m
+     in a == b
+
+-- |
+-- >>> commutativity' (Succ Zero)
+-- True
+commutativity' :: Nat -> Bool
+commutativity' m =
+    let a = add m Zero
+        b = add Zero m
+     in a == b
