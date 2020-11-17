@@ -67,3 +67,19 @@ commutativity' m =
     let a = add m Zero
         b = add Zero m
      in a == b
+
+-- 3. Using the following definition for the library function that
+-- decides if all elements of a list satisfy a predicate
+all :: (t -> Bool) -> [t] -> Bool
+all p [] = True
+all p (x:xs) = p x && all p xs
+
+-- complete the proof of the correctness of replicate by showing that
+-- it produces a list with identical elements,
+-- all (== x) (replicate n x), by induction on
+-- Hint: show that the property is always True.
+prop3 :: Eq a => Int -> a -> Bool
+prop3 n x =
+    let a = all (== x) (replicate n x)
+        b = (== x) x && all (== x) (replicate (n - 1) x)
+    in a == b
