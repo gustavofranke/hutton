@@ -106,3 +106,24 @@ prop3 n x =
 -- ([] ++ ys) ++ zs -- applying [] ++ ys = ys
 -- ys ++ zs
 
+-- 5. Using the above definition for ++, together with
+take :: (Eq t, Num t) => t -> [a] -> [a]
+take 0 _ = []
+take _ [] = []
+take n (x : xs) = x : take (n -1) xs
+
+drop :: (Eq t, Num t) => t -> [a] -> [a]
+drop 0 xs = xs
+drop _ [] = []
+drop n (_ : xs) = drop (n -1) xs
+
+-- show that take n xs ++ drop n xs = xs,
+-- by simultaneous induction on the integer n, and the list xs.
+-- Hint: there are three cases,
+-- one for each pattern of arguments in the definitions of take and drop.
+
+-- Prop:
+-- take 0 xs ++ drop 0 xs
+-- []        ++ xs
+-- xs
+
