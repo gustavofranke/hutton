@@ -1,6 +1,6 @@
 module Part2.Ch16.Exercises where
 
-import Prelude hiding (all, (++))
+import Prelude hiding (all, (++), take, drop)
 -- 16.9 Exercises
 -- 1. Show that add n (Succ m) = Succ (add n m), by induction on n.
 data Nat = Zero | Succ Nat deriving Eq
@@ -83,3 +83,26 @@ prop3 n x =
     let a = all (== x) (replicate n x)
         b = (== x) x && all (== x) (replicate (n - 1) x)
     in a == b
+
+-- 4. Using the definition
+(++) :: [a] -> [a] -> [a]
+[] ++ ys = ys
+(x:xs) ++ ys = x : (xs ++ ys)
+-- verify the following two properties, by induction on xs:
+-- xs ++ [] = xs
+-- xs ++ (ys ++ zs) = (xs ++ ys) ++ zs
+-- Hint: the proofs are similar to those for the add function.
+
+-- Prop 1:
+-- [] ++ [] = [] -- applying [] ++ ys = ys, with ys = []
+
+-- Prop 2:
+-- [] ++ (ys ++ zs) = ([] ++ ys) ++ zs
+
+-- [] ++ (ys ++ zs) -- applying [] ++ ys = ys, with ys = (ys ++ zs)
+--       (ys ++ zs)
+-- ys ++ zs
+
+-- ([] ++ ys) ++ zs -- applying [] ++ ys = ys
+-- ys ++ zs
+
