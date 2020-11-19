@@ -149,3 +149,32 @@ nnodes (Node t1 t2) = 1 + nnodes t1 + nnodes t2
 prop :: Int -> Bool
 prop x = nleaves (Leaf x) == 1 + nnodes (Leaf x)
 
+-- 7. Verify the functor laws for the Maybe type.
+-- Hint: the proofs proceed by case analysis, and do not require the use of induction.
+-- Impl:
+-- fmap :: (a -> b) -> Maybe a -> Maybe b
+-- fmap _ Nothing  = Nothing
+-- fmap g (Just x) = Just (g x)
+
+-- Law : fmap id = id
+
+-- fmap id Nothing
+-- Nothing
+
+-- fmap id (Just x)
+-- Just (id x)
+-- Just x
+
+-- Law : fmap (g . h) = fmap g . fmap h
+
+-- fmap (g . h)
+-- fmap (g . h) Nothing
+-- Nothing
+
+-- fmap g . fmap h
+-- fmap (g . h) (Just x)
+-- Just (g . h x)
+
+-- fmap (g . h)
+-- fmap (g . h) (Just x)
+-- Just (g . h x)
