@@ -127,3 +127,25 @@ drop n (_ : xs) = drop (n -1) xs
 -- []        ++ xs
 -- xs
 
+-- 6. Given the type declaration
+data Tree = Leaf Int | Node Tree Tree
+-- show that the number of leaves in such a tree is always
+-- one greater than the number of nodes, by induction on trees.
+-- Hint: start by defining functions that count the number of leaves
+-- and nodes in a tree.
+
+nleaves :: Tree -> Int
+nleaves (Leaf _) = 1
+nleaves (Node t1 t2) = nleaves t1 + nleaves t2
+
+nnodes:: Tree -> Int
+nnodes (Leaf _) = 0
+nnodes (Node t1 t2) = 1 + nnodes t1 + nnodes t2
+
+-- Prop: #leaves = #nodes + 1
+-- |
+-- >>> prop 6
+-- True
+prop :: Int -> Bool
+prop x = nleaves (Leaf x) == 1 + nnodes (Leaf x)
+
