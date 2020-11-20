@@ -29,16 +29,17 @@ stack hoogle -- server --local --port=8080
 ```
 
 Hie file generation:
-First install the tool,
+
+First, install the tool,
 ```
 stack build --copy-compiler-tool implicit-hie
 stack exec -- which implicit-hie
 /Users/gustavo/.stack/compiler-tools/x86_64-osx/ghc-8.8.4/bin/gen-hie
 ```
 
-Generate the file:
+Then, generate the file:
 ```
 gen-hie > hie.yaml
 ```
 
-All stack commands were ripped off from [this great blog post](https://lexi-lambda.github.io/blog/2018/02/10/an-opinionated-guide-to-haskell-in-2018/)
+All stack commands were ripped off from [this great blog post](https://lexi-lambda.github.io/blog/2018/02/10/an-opinionated-guide-to-haskell-in-2018/).
