@@ -178,3 +178,30 @@ prop x = nleaves (Leaf x) == 1 + nnodes (Leaf x)
 -- fmap (g . h)
 -- fmap (g . h) (Just x)
 -- Just (g . h x)
+
+-- 8. Given the type and instance declarations below,
+-- verify the functor laws for the Tree type, by induction on trees.
+data Tree1 a = Leaf1 a | Node1 (Tree1 a) (Tree1 a)
+instance Functor Tree1 where
+    -- fmap :: (a -> b) -> Tree a -> Tree b
+    fmap g (Leaf1 x) = Leaf1 (g x)
+    fmap g (Node1 l r) = Node1 (fmap g l) (fmap g r)
+
+-- Law : fmap id = id
+-- fmap id (Leaf1 x)
+-- Leaf1 (id x)
+
+-- fmap id (Node1 l r)
+-- Node1 (fmap id l) (fmap id r)
+-- Node1 (fmap id Leaf1) (fmap id Leaf1)
+-- Node1 (Leaf1 id) (Leaf1 id)
+
+-- Law : fmap (g . h) = fmap g . fmap h
+-- fmap (g . h)
+-- fmap (g . h) (Leaf1 x)
+-- Leaf1 ((g . h) x)
+
+-- fmap g . fmap h
+-- fmap g (Leaf1 x) . fmap h (Leaf1 x)
+-- Leaf1 (g x) . Leaf1 (h x)
+
