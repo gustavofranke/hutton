@@ -1,6 +1,7 @@
 # hutton
 
-This is my sandbox repo for playing around with the concepts ideas, and most importantly, code, from [this absolutely amazing book](http://www.cs.nott.ac.uk/~pszgmh/pih.html).
+This is my sandbox repo for playing around with the concepts, ideas, and most importantly, code, from [this absolutely amazing book](http://www.cs.nott.ac.uk/~pszgmh/pih.html).
+
 You can buy it from [here](https://www.cambridge.org/ie/academic/subjects/computer-science/programming-languages-and-applied-logic/programming-haskell-2nd-edition) or [here](https://www.amazon.co.uk/Programming-Haskell-Graham-Hutton/dp/1316626229/).
 
 It contains 120 exercises, so for me, this is still work in progress.
