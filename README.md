@@ -30,7 +30,7 @@ stack hoogle -- server --local --port=8080
 
 Hie file generation:
 
-First, install the tool,
+First, install the tool:
 ```
 stack build --copy-compiler-tool implicit-hie
 stack exec -- which implicit-hie
